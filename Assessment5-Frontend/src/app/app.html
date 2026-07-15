@@ -1,0 +1,346 @@
+<!-- Top navigation -->
+<nav class="navbar navbar-expand-lg app-navbar sticky-top">
+  <div class="container">
+    <a class="navbar-brand d-flex align-items-center gap-2" href="#">
+      <span class="brand-mark"><i class="bi bi-radar"></i></span>
+      <span class="d-flex flex-column lh-1">
+        <span class="fw-semibold">Scan Manager</span>
+        <span class="brand-sub">Website Audit Console</span>
+      </span>
+    </a>
+    <span class="navbar-text small text-white-50 d-none d-md-inline">
+      <i class="bi bi-hdd-network me-1"></i>api&nbsp;·&nbsp;localhost:8080
+    </span>
+  </div>
+</nav>
+
+<!-- Toast -->
+@if (toast(); as t) {
+  <div class="toast-wrapper position-fixed top-0 end-0 p-3">
+    <div class="app-toast alert alert-{{ t.type }} shadow border-0 d-flex align-items-center gap-2 mb-0"
+         role="alert">
+      @switch (t.type) {
+        @case ('success') { <i class="bi bi-check-circle-fill"></i> }
+        @case ('danger') { <i class="bi bi-exclamation-octagon-fill"></i> }
+        @default { <i class="bi bi-info-circle-fill"></i> }
+      }
+      <span>{{ t.message }}</span>
+    </div>
+  </div>
+}
+
+<!-- Hero + KPIs -->
+<header class="app-hero">
+  <div class="container py-4">
+    <div class="row align-items-center g-3">
+      <div class="col-lg-5">
+        <h1 class="h3 fw-bold mb-1">Website Scan Dashboard</h1>
+        <p class="text-white-50 mb-0">
+          Monitor domain crawls, broken links and missing assets in one place.
+        </p>
+      </div>
+      <div class="col-lg-7">
+        <div class="row g-3">
+          <div class="col-6 col-md-3">
+            <div class="kpi-card">
+              <div class="kpi-icon bg-primary-subtle text-primary"><i class="bi bi-collection"></i></div>
+              <div class="kpi-value">{{ totalScans() }}</div>
+              <div class="kpi-label">Scans</div>
+            </div>
+          </div>
+          <div class="col-6 col-md-3">
+            <div class="kpi-card">
+              <div class="kpi-icon bg-info-subtle text-info"><i class="bi bi-file-earmark-text"></i></div>
+              <div class="kpi-value">{{ totalPages() }}</div>
+              <div class="kpi-label">Pages</div>
+            </div>
+          </div>
+          <div class="col-6 col-md-3">
+            <div class="kpi-card">
+              <div class="kpi-icon bg-warning-subtle text-warning"><i class="bi bi-link-45deg"></i></div>
+              <div class="kpi-value">{{ totalBrokenLinks() }}</div>
+              <div class="kpi-label">Broken Links</div>
+            </div>
+          </div>
+          <div class="col-6 col-md-3">
+            <div class="kpi-card">
+              <div class="kpi-icon bg-danger-subtle text-danger"><i class="bi bi-image"></i></div>
+              <div class="kpi-value">{{ totalMissingImages() }}</div>
+              <div class="kpi-label">Missing Images</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="container app-content pb-5">
+  <div class="row g-4">
+    <!-- ============================= LEFT COLUMN ============================= -->
+    <div class="col-lg-4">
+      <!-- Create scan (POST /scan) -->
+      <div class="card app-card mb-4">
+        <div class="card-header">
+          <span class="card-title-text"><i class="bi bi-plus-circle me-2 text-primary"></i>Create Scan</span>
+          <span class="endpoint-pill">POST /scan</span>
+        </div>
+        <div class="card-body">
+          <form (ngSubmit)="createScan()">
+            <div class="mb-3">
+              <label class="form-label">Domain Name</label>
+              <div class="input-group">
+                <span class="input-group-text"><i class="bi bi-globe"></i></span>
+                <input type="text" class="form-control" name="domainName"
+                       [(ngModel)]="newScan.domainName" placeholder="example.com" required>
+              </div>
+            </div>
+            <div class="row g-3">
+              <div class="col-6">
+                <label class="form-label">Pages</label>
+                <input type="number" class="form-control" name="numPages"
+                       [(ngModel)]="newScan.numPages" min="0">
+              </div>
+              <div class="col-6">
+                <label class="form-label">Broken Links</label>
+                <input type="number" class="form-control" name="numBrokenLinks"
+                       [(ngModel)]="newScan.numBrokenLinks" min="0">
+              </div>
+              <div class="col-6">
+                <label class="form-label">Missing Images</label>
+                <input type="number" class="form-control" name="numMissingImages"
+                       [(ngModel)]="newScan.numMissingImages" min="0">
+              </div>
+            </div>
+            <button type="submit" class="btn btn-primary w-100 mt-4" [disabled]="creating()">
+              @if (creating()) {
+                <span class="spinner-border spinner-border-sm me-2"></span>
+              } @else {
+                <i class="bi bi-plus-lg me-1"></i>
+              }
+              Create Scan
+            </button>
+          </form>
+        </div>
+      </div>
+
+      <!-- Get by id (GET /scan/{id}) -->
+      <div class="card app-card mb-4">
+        <div class="card-header">
+          <span class="card-title-text"><i class="bi bi-search me-2 text-info"></i>Find by ID</span>
+          <span class="endpoint-pill">GET /scan/{{ '{id}' }}</span>
+        </div>
+        <div class="card-body">
+          <div class="input-group mb-3">
+            <span class="input-group-text"><i class="bi bi-hash"></i></span>
+            <input type="number" class="form-control" placeholder="Scan id"
+                   [(ngModel)]="lookupId" (keyup.enter)="findById()">
+            <button class="btn btn-info text-white" (click)="findById()" [disabled]="lookupLoading()">
+              @if (lookupLoading()) {
+                <span class="spinner-border spinner-border-sm"></span>
+              } @else {
+                <i class="bi bi-arrow-right"></i>
+              }
+            </button>
+          </div>
+
+          @if (lookupResult(); as s) {
+            <ul class="list-group list-group-flush detail-list">
+              <li class="list-group-item d-flex justify-content-between">
+                <span class="text-muted">ID</span><strong>{{ s.id }}</strong>
+              </li>
+              <li class="list-group-item d-flex justify-content-between">
+                <span class="text-muted">Domain</span><strong>{{ s.domainName }}</strong>
+              </li>
+              <li class="list-group-item d-flex justify-content-between">
+                <span class="text-muted">Pages</span><strong>{{ s.numPages }}</strong>
+              </li>
+              <li class="list-group-item d-flex justify-content-between">
+                <span class="text-muted">Broken Links</span><strong>{{ s.numBrokenLinks }}</strong>
+              </li>
+              <li class="list-group-item d-flex justify-content-between">
+                <span class="text-muted">Missing Images</span><strong>{{ s.numMissingImages }}</strong>
+              </li>
+              <li class="list-group-item d-flex justify-content-between align-items-center">
+                <span class="text-muted">Status</span>
+                <span class="badge rounded-pill" [class.text-bg-danger]="s.deleted"
+                      [class.text-bg-success]="!s.deleted">
+                  {{ s.deleted ? 'Deleted' : 'Active' }}
+                </span>
+              </li>
+            </ul>
+          } @else {
+            <p class="text-muted small text-center mb-0">Enter an id to look up a scan.</p>
+          }
+        </div>
+      </div>
+
+      <!-- Search (GET /scan/search/{domain}?orderBy=) -->
+      <div class="card app-card">
+        <div class="card-header">
+          <span class="card-title-text"><i class="bi bi-funnel me-2 text-success"></i>Search &amp; Sort</span>
+          <span class="endpoint-pill">GET /scan/search</span>
+        </div>
+        <div class="card-body">
+          <div class="mb-3">
+            <label class="form-label">Domain Name</label>
+            <div class="input-group">
+              <span class="input-group-text"><i class="bi bi-globe"></i></span>
+              <input type="text" class="form-control" placeholder="example.com"
+                     [(ngModel)]="searchDomain" (keyup.enter)="search()">
+            </div>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Order By</label>
+            <select class="form-select" [(ngModel)]="searchOrderBy">
+              @for (col of orderByColumns; track col) {
+                <option [value]="col">{{ col }}</option>
+              }
+            </select>
+          </div>
+          <div class="d-flex gap-2">
+            <button class="btn btn-success flex-fill" (click)="search()" [disabled]="searchLoading()">
+              @if (searchLoading()) {
+                <span class="spinner-border spinner-border-sm me-2"></span>
+              } @else {
+                <i class="bi bi-funnel-fill me-1"></i>
+              }
+              Search
+            </button>
+            <button class="btn btn-outline-secondary" (click)="clearSearch()">Clear</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================= RIGHT COLUMN ============================= -->
+    <div class="col-lg-8">
+      <!-- Search results -->
+      @if (searchResults(); as results) {
+        <div class="card app-card mb-4">
+          <div class="card-header">
+            <span class="card-title-text">
+              <i class="bi bi-funnel-fill me-2 text-success"></i>Search Results
+              <span class="badge rounded-pill text-bg-secondary ms-1">{{ results.length }}</span>
+            </span>
+            <span class="text-muted small">sorted by <code>{{ searchOrderBy }}</code></span>
+          </div>
+          <div class="card-body p-0">
+            @if (results.length === 0) {
+              <div class="empty-state">
+                <i class="bi bi-inbox"></i>
+                <p class="mb-0">No matching scans.</p>
+              </div>
+            } @else {
+              <div class="table-responsive">
+                <table class="table app-table table-hover mb-0 align-middle">
+                  <thead>
+                    <tr>
+                      <th>ID</th><th>Domain</th><th class="text-end">Pages</th>
+                      <th class="text-end">Broken</th><th class="text-end">Missing</th><th>Status</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    @for (s of results; track s.id) {
+                      <tr>
+                        <td class="text-muted">#{{ s.id }}</td>
+                        <td class="fw-medium">{{ s.domainName }}</td>
+                        <td class="text-end">{{ s.numPages }}</td>
+                        <td class="text-end">{{ s.numBrokenLinks }}</td>
+                        <td class="text-end">{{ s.numMissingImages }}</td>
+                        <td>
+                          <span class="badge rounded-pill" [class.text-bg-danger]="s.deleted"
+                                [class.text-bg-success]="!s.deleted">
+                            {{ s.deleted ? 'Deleted' : 'Active' }}
+                          </span>
+                        </td>
+                      </tr>
+                    }
+                  </tbody>
+                </table>
+              </div>
+            }
+          </div>
+        </div>
+      }
+
+      <!-- All scans (GET /scan) -->
+      <div class="card app-card">
+        <div class="card-header">
+          <span class="card-title-text">
+            <i class="bi bi-list-ul me-2 text-primary"></i>All Scans
+            <span class="badge rounded-pill text-bg-secondary ms-1">{{ scans().length }}</span>
+          </span>
+          <button class="btn btn-sm btn-outline-primary" (click)="loadScans()" [disabled]="loadingList()">
+            @if (loadingList()) {
+              <span class="spinner-border spinner-border-sm me-1"></span>
+            } @else {
+              <i class="bi bi-arrow-clockwise me-1"></i>
+            }
+            Refresh
+          </button>
+        </div>
+        <div class="card-body p-0">
+          @if (loadingList()) {
+            <div class="empty-state">
+              <span class="spinner-border text-primary mb-2"></span>
+              <p class="mb-0">Loading scans…</p>
+            </div>
+          } @else if (scans().length === 0) {
+            <div class="empty-state">
+              <i class="bi bi-inbox"></i>
+              <p class="mb-0">No scans yet. Create one to get started.</p>
+            </div>
+          } @else {
+            <div class="table-responsive">
+              <table class="table app-table table-hover mb-0 align-middle">
+                <thead>
+                  <tr>
+                    <th>ID</th><th>Domain</th><th class="text-end">Pages</th>
+                    <th class="text-end">Broken</th><th class="text-end">Missing</th>
+                    <th class="text-end">Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  @for (s of scans(); track s.id) {
+                    <tr>
+                      <td class="text-muted">#{{ s.id }}</td>
+                      <td class="fw-medium">
+                        <i class="bi bi-globe2 text-secondary me-1"></i>{{ s.domainName }}
+                      </td>
+                      <td class="text-end">{{ s.numPages }}</td>
+                      <td class="text-end">
+                        <span class="badge rounded-pill"
+                              [class.text-bg-warning]="s.numBrokenLinks"
+                              [class.text-bg-light]="!s.numBrokenLinks">
+                          {{ s.numBrokenLinks }}
+                        </span>
+                      </td>
+                      <td class="text-end">
+                        <span class="badge rounded-pill"
+                              [class.text-bg-warning]="s.numMissingImages"
+                              [class.text-bg-light]="!s.numMissingImages">
+                          {{ s.numMissingImages }}
+                        </span>
+                      </td>
+                      <td class="text-end">
+                        <button class="btn btn-sm btn-outline-danger" (click)="deleteScan(s.id)"
+                                title="Logical delete">
+                          <i class="bi bi-trash"></i>
+                        </button>
+                      </td>
+                    </tr>
+                  }
+                </tbody>
+              </table>
+            </div>
+          }
+        </div>
+        <div class="card-footer text-muted small">
+          <span class="endpoint-pill me-1">GET /scan</span> lists active scans ·
+          <span class="endpoint-pill mx-1">DELETE /scan/{{ '{id}' }}</span> performs a logical delete.
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
