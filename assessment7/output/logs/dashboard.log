@@ -1,0 +1,68 @@
+2026-07-21 17:32:51 | INFO     | ============================================================
+2026-07-21 17:32:51 | INFO     | STARTING AUTOMATED MUTUAL FUND DASHBOARD
+2026-07-21 17:32:51 | INFO     | Data directory: C:\Users\shivam.sharma\Downloads\PYTHON_ASSESSMENT\ASSESSMENT
+2026-07-21 17:32:51 | INFO     | ============================================================
+2026-07-21 17:32:51 | INFO     | Loaded investors.csv      -> 50 rows, 6 cols
+2026-07-21 17:32:51 | INFO     | Loaded funds.csv          -> 50 rows, 6 cols
+2026-07-21 17:32:51 | INFO     | Loaded transactions.csv   -> 50 rows, 8 cols
+2026-07-21 17:32:51 | INFO     | Loaded nav_history.csv    -> 50 rows, 3 cols
+2026-07-21 17:32:51 | INFO     | Cleaning data ...
+2026-07-21 17:32:51 | INFO     | Filled missing values -> income:0 expense:0 risk:0 nav:0
+2026-07-21 17:32:51 | INFO     | Removing outliers ...
+2026-07-21 17:32:51 | INFO     | Amount outliers removed: 1 (>5890.29)
+2026-07-21 17:32:51 | INFO     | NAV-change outliers removed: 0
+2026-07-21 17:32:51 | INFO     | Merging datasets ...
+2026-07-21 17:32:51 | INFO     | Master table built -> 49 rows, 22 cols
+2026-07-21 17:32:51 | INFO     | Calculating NumPy statistics ...
+2026-07-21 17:32:51 | INFO     |   mean_investment_amount         = 2843.6143
+2026-07-21 17:32:51 | INFO     |   median_investor_income         = 1170000.0000
+2026-07-21 17:32:51 | INFO     |   std_nav                        = 13.4023
+2026-07-21 17:32:51 | INFO     |   fund_return_p90                = 3.4385
+2026-07-21 17:32:51 | INFO     |   fund_return_p95                = 3.4526
+2026-07-21 17:32:51 | INFO     |   income_investment_correlation  = -0.3217
+2026-07-21 17:32:51 | INFO     |   average_daily_nav              = 35.1200
+2026-07-21 17:32:51 | INFO     | Analyzing funds ...
+2026-07-21 17:32:51 | INFO     |   best_fund                = ('Bluechip Equity Fund', np.float64(3.47))
+2026-07-21 17:32:51 | INFO     |   worst_fund               = ('Small Cap Opportunities', np.float64(2.19))
+2026-07-21 17:32:51 | INFO     |   highest_aum              = ('Small Cap Opportunities', 32730.65)
+2026-07-21 17:32:51 | INFO     |   most_popular_fund        = ('Alpha Growth Fund', 10)
+2026-07-21 17:32:51 | INFO     |   highest_expense_ratio    = ('Emerging Markets Fund', 1.88)
+2026-07-21 17:32:51 | INFO     | Calculating finance metrics ...
+2026-07-21 17:32:51 | INFO     |   total_portfolio_value        = 94046.8000
+2026-07-21 17:32:51 | INFO     |   total_invested               = 92732.5000
+2026-07-21 17:32:51 | INFO     |   absolute_return              = 1314.3000
+2026-07-21 17:32:51 | INFO     |   portfolio_return_pct         = 1.4173
+2026-07-21 17:32:51 | INFO     |   cagr_pct                     = 77.0303
+2026-07-21 17:32:51 | INFO     |   annualized_return_pct        = 57.5189
+2026-07-21 17:32:51 | INFO     |   diversification_score        = 0.7320
+2026-07-21 17:32:51 | INFO     |   avg_holding_period_days      = 4.5918
+2026-07-21 17:32:51 | INFO     |   expense_ratio_impact         = 1.1598
+2026-07-21 17:32:51 | INFO     |   sharpe_ratio                 = -5.7942
+2026-07-21 17:32:51 | INFO     | Identifying top 20 investors ...
+2026-07-21 17:32:51 | INFO     | Identifying high-value investors ...
+2026-07-21 17:32:51 | INFO     |   strict criteria applied: investment>10L, txns>10, income>15L, risk=High
+2026-07-21 17:32:51 | WARNING  | No investor met strict thresholds - using top-quartile fallback (TotalInvested >= 13713.19)
+2026-07-21 17:32:51 | INFO     |   3 high-value investors identified
+2026-07-21 17:32:51 | INFO     | Top investor: {'InvestorID': 'INV004', 'InvestorName': 'Neha Gupta', 'City': 'Pune', 'RiskProfile': 'Moderate', 'AnnualIncome': 650000, 'TxnCount': 5, 'TotalInvested': 16783.75, 'PortfolioValue': 17041.35, 'ProfitLoss': 257.59999999999854}
+2026-07-21 17:32:51 | INFO     | High-value investor count: 3
+2026-07-21 17:32:51 | INFO     | Generating charts ...
+2026-07-21 17:32:51 | INFO     |   saved 01_portfolio_allocation_pie.png
+2026-07-21 17:32:51 | INFO     |   saved 01b_portfolio_allocation_by_fund_pie.png
+2026-07-21 17:32:51 | INFO     |   saved 02_fund_wise_investment_bar.png
+2026-07-21 17:32:51 | INFO     |   saved 03_monthly_investment_trend_line.png
+2026-07-21 17:32:51 | INFO     |   saved 04_category_returns_bar.png
+2026-07-21 17:32:52 | INFO     |   saved 05_nav_movement_line.png
+2026-07-21 17:32:52 | INFO     | Identifying top 10 investors ...
+2026-07-21 17:32:52 | INFO     |   saved 06_top10_investors_hbar.png
+2026-07-21 17:32:52 | INFO     | Exporting reports ...
+2026-07-21 17:32:52 | INFO     | Identifying top 20 investors ...
+2026-07-21 17:32:52 | INFO     | Identifying high-value investors ...
+2026-07-21 17:32:52 | INFO     |   strict criteria applied: investment>10L, txns>10, income>15L, risk=High
+2026-07-21 17:32:52 | WARNING  | No investor met strict thresholds - using top-quartile fallback (TotalInvested >= 13713.19)
+2026-07-21 17:32:52 | INFO     |   3 high-value investors identified
+2026-07-21 17:32:52 | INFO     | Identifying top 5 investors ...
+2026-07-21 17:32:52 | INFO     |   reports written to C:\Users\shivam.sharma\Downloads\PYTHON_ASSESSMENT\output\reports
+2026-07-21 17:32:52 | INFO     | ============================================================
+2026-07-21 17:32:52 | INFO     | DASHBOARD COMPLETED SUCCESSFULLY
+2026-07-21 17:32:52 | INFO     | Outputs available in: C:\Users\shivam.sharma\Downloads\PYTHON_ASSESSMENT\output
+2026-07-21 17:32:52 | INFO     | ============================================================

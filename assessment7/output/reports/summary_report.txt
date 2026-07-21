@@ -1,0 +1,44 @@
+======================================================================
+MUTUAL FUND PORTFOLIO PERFORMANCE & RISK ANALYSIS REPORT
+Generated: 2026-07-21 17:32:52
+======================================================================
+
+-- NUMPY STATISTICS --
+  mean_investment_amount          : 2,843.61
+  median_investor_income          : 1,170,000.00
+  std_nav                         : 13.40
+  fund_return_p90                 : 3.44
+  fund_return_p95                 : 3.45
+  income_investment_correlation   : -0.32
+  average_daily_nav               : 35.12
+
+-- FUND ANALYSIS --
+  best_fund               : ('Bluechip Equity Fund', np.float64(3.47))
+  worst_fund              : ('Small Cap Opportunities', np.float64(2.19))
+  highest_aum             : ('Small Cap Opportunities', 32730.65)
+  most_popular_fund       : ('Alpha Growth Fund', 10)
+  highest_expense_ratio   : ('Emerging Markets Fund', 1.88)
+
+-- FINANCE METRICS --
+  total_portfolio_value       : 94,046.80
+  total_invested              : 92,732.50
+  absolute_return             : 1,314.30
+  portfolio_return_pct        : 1.42
+  cagr_pct                    : 77.03
+  annualized_return_pct       : 57.52
+  diversification_score       : 0.73
+  avg_holding_period_days     : 4.59
+  expense_ratio_impact        : 1.16
+  sharpe_ratio                : -5.79
+
+-- CATEGORY-WISE INVESTMENT % --
+  Equity              :  64.19%
+  Hybrid              :  21.66%
+  Debt                :  14.14%
+
+-- TOP 5 INVESTORS --
+  Neha Gupta           value=Rs.17,041 P/L=Rs.258
+  Aarav Sharma         value=Rs.15,408 P/L=Rs.231
+  Ananya Iyer          value=Rs.14,759 P/L=Rs.174
+  Vikram Singh         value=Rs.11,186 P/L=Rs.88
+  Arjun Reddy          value=Rs.9,745 P/L=Rs.198

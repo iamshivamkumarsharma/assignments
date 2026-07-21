@@ -1,0 +1,4 @@
+InvestorID,PortfolioValue,TotalInvested,NumFunds,ProfitLoss,TxnCount,InvestorName,Age,City,AnnualIncome,RiskProfile
+INV004,17041.35,16783.75,5,257.59999999999854,5,Neha Gupta,27,Pune,650000,Moderate
+INV001,15408.2,15176.8,5,231.40000000000146,5,Aarav Sharma,29,Chennai,850000,Moderate
+INV006,14759.2,14585.0,5,174.20000000000073,5,Ananya Iyer,30,Coimbatore,720000,Moderate
