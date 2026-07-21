@@ -1,0 +1,21 @@
+{
+  "transactions_analysed": 25,
+  "funds": 50,
+  "investors": 50,
+  "total_investment": 246945.0,
+  "total_current_value": 215163.75,
+  "total_profit": -31781.25,
+  "overall_roi_pct": -12.87,
+  "best_fund_by_profit": "Mid Cap Growth",
+  "worst_fund_by_roi": "Corporate Bond",
+  "data_issues": {
+    "Duplicate NAV records": 0,
+    "Negative NAV rows": 0,
+    "Future NAV dates": 0,
+    "Future purchase dates": 0,
+    "Missing Fund IDs (txn not in funds)": 0,
+    "Missing Investor IDs (txn not in investors)": 0,
+    "Invalid Purchase NAV (< 0)": 0,
+    "Funds missing NAV history": 5
+  }
+}

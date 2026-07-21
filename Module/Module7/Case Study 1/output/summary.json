@@ -1,0 +1,11 @@
+{
+  "loans_analysed": 99,
+  "total_loan_value": 93180000.0,
+  "default_pct": 33.33,
+  "npa_pct": 16.85,
+  "average_emi": 12689.9,
+  "average_debt_to_income": 1.617,
+  "portfolio_expected_loss": 9781185.0,
+  "high_risk_customers": 73,
+  "outliers_removed": 1
+}

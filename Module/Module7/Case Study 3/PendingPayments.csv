@@ -1,0 +1,26 @@
+CustomerName,LoanID,EMIAmount,PendingEMIs,EMIDue,PaymentStatus
+Aarav Sharma,L1001,10500,35,367500,Partial
+Priya Nair,L1002,8750,42,367500,Partial
+Rahul Verma,L1003,12500,24,300000,Partial
+Neha Gupta,L1004,9800,48,470400,Partial
+Vikram Singh,L1005,15200,20,304000,Partial
+Anjali Reddy,L1006,7200,52,374400,Partial
+Karthik Raj,L1007,18500,10,185000,Partial
+Sneha Patil,L1008,9100,40,364000,Partial
+Arjun Kumar,L1009,11000,32,352000,Partial
+Meera Joshi,L1010,6400,54,345600,Partial
+Rohan Das,L1011,13800,28,386400,Partial
+Kavya Iyer,L1012,9900,36,356400,Partial
+Manoj Patel,L1013,16000,15,240000,Partial
+Divya Menon,L1014,8100,45,364500,Partial
+Suresh Rao,L1015,11750,33,387750,Partial
+Pooja Sharma,L1016,14300,22,314600,Partial
+Ajay Mishra,L1017,6900,55,379500,Partial
+Nisha Kapoor,L1018,13250,29,384250,Partial
+Deepak Yadav,L1019,10400,38,395200,Partial
+Ritika Sen,L1020,9600,41,393600,Partial
+Harish Kumar,L1021,17600,12,211200,Partial
+Aishwarya Rao,L1022,8400,46,386400,Partial
+Naveen Babu,L1023,12800,30,384000,Partial
+Lakshmi Devi,L1024,15000,18,270000,Partial
+Sanjay Mehta,L1025,9300,43,399900,Partial
