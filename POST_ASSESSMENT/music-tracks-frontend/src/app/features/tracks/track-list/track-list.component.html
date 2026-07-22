@@ -1,0 +1,57 @@
+@if (loading()) {
+  <div class="text-center py-5 text-muted">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+    <p class="mt-3 mb-0">Loading tracks…</p>
+  </div>
+} @else if (tracks().length === 0) {
+  <div class="text-center py-5 text-muted">
+    <i class="bi bi-music-note-list fs-1 d-block mb-2"></i>
+    <p class="mb-0">No tracks found.</p>
+  </div>
+} @else {
+  <div class="table-responsive">
+    <table class="table table-hover align-middle mb-0">
+      <thead class="table-light">
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Title</th>
+          <th scope="col">Album</th>
+          <th scope="col">Release Date</th>
+          <th scope="col" class="text-end">Play Count</th>
+          <th scope="col" class="text-center">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (track of tracks(); track trackById($index, track)) {
+          <tr>
+            <td class="text-muted">{{ track.id }}</td>
+            <td class="fw-semibold">{{ track.title }}</td>
+            <td>{{ track.albumName }}</td>
+            <td>
+              @if (track.releaseDate) {
+                {{ track.releaseDate | date: 'mediumDate' }}
+              } @else {
+                <span class="text-muted">—</span>
+              }
+            </td>
+            <td class="text-end">
+              <span class="badge text-bg-secondary">{{ track.playCount ?? 0 }}</span>
+            </td>
+            <td class="text-center">
+              <button
+                type="button"
+                class="btn btn-sm btn-outline-danger"
+                title="Delete track"
+                (click)="deleteTrack.emit(track)"
+              >
+                <i class="bi bi-trash"></i>
+              </button>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+}

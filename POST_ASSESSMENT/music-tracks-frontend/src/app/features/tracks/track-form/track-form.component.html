@@ -1,0 +1,73 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
+  <div class="row g-3">
+    <div class="col-md-6">
+      <label for="title" class="form-label">Title <span class="text-danger">*</span></label>
+      <input
+        id="title"
+        type="text"
+        class="form-control"
+        formControlName="title"
+        [class.is-invalid]="hasError('title', 'required') || hasError('title', 'maxlength')"
+        placeholder="e.g. Bohemian Rhapsody"
+      />
+      @if (hasError('title', 'required')) {
+        <div class="invalid-feedback">Title is required.</div>
+      }
+      @if (hasError('title', 'maxlength')) {
+        <div class="invalid-feedback">Title must be at most 120 characters.</div>
+      }
+    </div>
+
+    <div class="col-md-6">
+      <label for="albumName" class="form-label">Album Name <span class="text-danger">*</span></label>
+      <input
+        id="albumName"
+        type="text"
+        class="form-control"
+        formControlName="albumName"
+        [class.is-invalid]="hasError('albumName', 'required') || hasError('albumName', 'maxlength')"
+        placeholder="e.g. A Night at the Opera"
+      />
+      @if (hasError('albumName', 'required')) {
+        <div class="invalid-feedback">Album name is required.</div>
+      }
+      @if (hasError('albumName', 'maxlength')) {
+        <div class="invalid-feedback">Album name must be at most 120 characters.</div>
+      }
+    </div>
+
+    <div class="col-md-6">
+      <label for="releaseDate" class="form-label">Release Date</label>
+      <input
+        id="releaseDate"
+        type="date"
+        class="form-control"
+        formControlName="releaseDate"
+      />
+    </div>
+
+    <div class="col-md-6">
+      <label for="playCount" class="form-label">Play Count</label>
+      <input
+        id="playCount"
+        type="number"
+        min="0"
+        class="form-control"
+        formControlName="playCount"
+        [class.is-invalid]="hasError('playCount', 'min')"
+      />
+      @if (hasError('playCount', 'min')) {
+        <div class="invalid-feedback">Play count cannot be negative.</div>
+      }
+    </div>
+  </div>
+
+  <div class="d-flex justify-content-end gap-2 mt-4">
+    <button type="button" class="btn btn-outline-secondary" (click)="reset()">
+      <i class="bi bi-arrow-counterclockwise me-1"></i>Reset
+    </button>
+    <button type="submit" class="btn btn-primary">
+      <i class="bi bi-plus-lg me-1"></i>Add Track
+    </button>
+  </div>
+</form>
